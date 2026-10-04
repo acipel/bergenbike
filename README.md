@@ -3,7 +3,7 @@
 Concept app by TU/e Team 19 for De Bergen, Eindhoven: find secure bike parking, register your bike, and report or
 check a stolen bike.
 
-**Live demo:** https://tonil00.github.io/bergenbike/
+**Live demo:** https://acipel.github.io/bergenbike/
 
 Open it on a phone to get the app. On a desktop you get the project page with a QR code; "Open the app" there shows
 the phone app in a preview frame.
