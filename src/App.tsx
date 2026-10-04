@@ -23,12 +23,27 @@ function useIsPhone(): boolean {
   )
 }
 
+/** Design size of the phone preview, bezel included. */
+const DEVICE = { width: 410, height: 864 }
+
+/** Scale that fits the whole phone preview in the window without changing its proportions. */
+function useDeviceScale(): number {
+  return useSyncExternalStore(
+    (notify) => {
+      window.addEventListener('resize', notify)
+      return () => window.removeEventListener('resize', notify)
+    },
+    () => Math.min(1, Math.max(0.45, (window.innerHeight - 132) / DEVICE.height)),
+  )
+}
+
 function Home() {
   return useIsPhone() ? <Navigate to="/map" replace /> : <Landing />
 }
 
 function AppShell() {
   const phone = useIsPhone()
+  const scale = useDeviceScale()
   const { pathname } = useLocation()
 
   useEffect(() => {
@@ -50,7 +65,11 @@ function AppShell() {
         <Icon name="back" size={18} sw={2.2} />
         About BergenBike
       </Link>
-      {shell}
+      <div className="device" style={{ width: DEVICE.width * scale, height: DEVICE.height * scale }}>
+        <div className="device-body" style={{ transform: `scale(${scale})` }}>
+          {shell}
+        </div>
+      </div>
       <p className="stage-note">BergenBike is made for phones. This is a preview of the phone app.</p>
     </div>
   )
